@@ -296,6 +296,9 @@ impl Configure {
         if matches!(self.interface, Interface::ILP64) {
             args.push("INTERFACE64=1".into())
         }
+        if self.dynamic_arch {
+            args.push("DYNAMIC_ARCH=1".into())
+        }
         if let Some(target) = self.target.as_ref() {
             args.push(format!("TARGET={:?}", target))
         }

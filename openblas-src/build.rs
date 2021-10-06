@@ -104,6 +104,10 @@ fn build() {
     } else {
         cfg.no_static = true;
     }
+    if feature_enabled("dynamic_arch") {
+        cfg.dynamic_arch = true;
+    }
+
     if let Ok(target) = env::var("OPENBLAS_TARGET") {
         cfg.target = Some(
             target
