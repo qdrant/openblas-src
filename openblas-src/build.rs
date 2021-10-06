@@ -1,5 +1,4 @@
 use std::{env, path::*, process::Command};
-use std::str::FromStr;
 
 fn feature_enabled(feature: &str) -> bool {
     env::var(format!("CARGO_FEATURE_{}", feature.to_uppercase())).is_ok()
@@ -106,8 +105,13 @@ fn build() {
         cfg.no_static = true;
     }
     if let Ok(is_dynamic_arch) = env::var("OPENBLAS_DYNAMIC_ARCH") {
-        cfg.dynamic_arch = FromStr::from_str(&is_dynamic_arch)
-            .expect("can't parse OPENBLAS_DYNAMIC_ARCH");
+        cfg.dynamic_arch = match is_dynamic_arch.as_ref() {
+            "1" => true,
+            "0" => false,
+            "true" => true,
+            "false" => false,
+            _ => panic!("Can't parse OPENBLAS_DYNAMIC_ARCH value {}", is_dynamic_arch)
+        };
     }
 
     if let Ok(target) = env::var("OPENBLAS_TARGET") {

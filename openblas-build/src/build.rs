@@ -399,7 +399,8 @@ impl Configure {
         let out = fs::File::create(out_dir.join("out.log")).expect("Cannot create log file");
         let err = fs::File::create(out_dir.join("err.log")).expect("Cannot create log file");
 
-        let command = Command::new("make")
+        let mut command = Command::new("make");
+        command
             .current_dir(out_dir)
             .stdout(unsafe { Stdio::from_raw_fd(out.into_raw_fd()) }) // this works only for unix
             .stderr(unsafe { Stdio::from_raw_fd(err.into_raw_fd()) })
@@ -407,7 +408,7 @@ impl Configure {
             .args(&["libs", "netlib", "shared"])
             .env_remove("TARGET");
 
-        println!("exec: {:?}", command);
+        println!("exec: {:?}", &command);
 
         match command.check_call()
         {
