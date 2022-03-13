@@ -17,7 +17,7 @@ pub enum Interface {
     ILP64,
 }
 
-/// CPU list in [TargetList](https://github.com/xianyi/OpenBLAS/blob/v0.3.10/TargetList.txt)
+/// CPU list in [TargetList](https://github.com/xianyi/OpenBLAS/blob/v0.3.20/TargetList.txt)
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash)]
 #[allow(non_camel_case_types)] // to use original identifiers
 pub enum Target {
@@ -37,6 +37,8 @@ pub enum Target {
     HASWELL,
     SKYLAKEX,
     ATOM,
+    COOPERLAKE,
+    SAPPHIRERAPIDS,
 
     // X86/X86_64 AMD
     ATHLON,
@@ -138,6 +140,8 @@ impl FromStr for Target {
             "haswell" => Self::HASWELL,
             "skylakex" => Self::SKYLAKEX,
             "atom" => Self::ATOM,
+            "cooperlake" => Self::COOPERLAKE,
+            "sapphirerapids" => Self::SAPPHIRERAPIDS,
 
             // X86/X86_64 AMD
             "athlon" => Self::ATHLON,
